@@ -175,7 +175,7 @@ $$ \lvert \tau_{ff} \rvert<  \frac{2^{15}}{256} = 128 $$
            例：
            $$k_p = 0.1$$<br>
            $$k_{pos} = k_p * 1280 = 128$$<br>
-           $$注：0 \leqslant k_p \geqslant 25.599$$
+           $$注：0 \leqslant k_p \leqslant 25.599$$
         </td>
     </tr>
 
@@ -195,7 +195,7 @@ $$ \lvert \tau_{ff} \rvert<  \frac{2^{15}}{256} = 128 $$
            例：
            $$k_w = 0.2$$<br>
            $$k_{spd} = k_w*1280 = 256$$<br>
-           $$注：0 \leqslant k_w \geqslant 25.599$$
+           $$注：0 \leqslant k_w \leqslant 25.599$$
         </td>
     </tr>
 

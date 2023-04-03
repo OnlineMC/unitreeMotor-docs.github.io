@@ -16,22 +16,22 @@ MotorData data;
 ```
 &emsp;&emsp;其中cmd是给电机发送的控制命令包，它们都是MotorCmd类型的结构体。所谓结构体，即包含了许多不同类型数据的数据包，我们马上就会展示针对结构体的操作。同理data是接收电机状态信息的数据包，它是一个MotorData类型的结构体。关于这两个结构体的具体内容，可以参考include/unitreeMotor/unitreeMotor.h文件，在此不再赘述。<br>
 &emsp;&emsp;接下来我们修改cmd。首先解释一下MotorCmd类型结构体包含的数据：
-1. `Id`：当前控制命令的目标电机ID
-2. `mode`: 目标电机运行模式。 0.停止 1.FOC 2.电机标定
+1. `Id`：电机ID 0~14 15:广播ID 此时电机无返回
+2. `mode`: 目标电机运行模式。 0.停止 1.FOC 2.电机标定 (发送后等待5sec,期间禁止给电机发送消息)
 3. `T`: 前馈力矩$$\tau_{ff}$$
-4. `W`: 指定角速度$$\omega_{des}$$
-5. `Pos`: 指定角度位置$$K_{des}$$
-6. `K_P`: 位置刚度$$K_p$$
-7. `K_W`: 速度刚度(阻尼)$$K_d$$<br>
+4. `W`: 期望角速度(电机转子端转速 rad/s)  $$\omega_{des}$$
+5. `Pos`: 期望角度(电机转子位置 rad) $$K_{des}$$
+6. `K_P`: 比例系数 范围 0~25.599$$K_p$$
+7. `K_W`: 阻尼系数 范围 0~25.599$$K_d$$<br>
 
 &emsp;&emsp;当mode的值为0时，后面的5个控制参数并没有任何作用。当mode的值为2时，表示进行电机标定。在这个例子中我们将mode的值设为1。这里我们让电机以恒定的速度旋转，完整的代码为：
 ```
 cmd.motorType = MotorType::Go2;
 cmd.id = 0;
 cmd.mode = 1;
-cmd.K_P = 0;
+cmd.K_P = 0; 
 cmd.W = 6.28*6.33;
-cmd.K_W = 0.001;
+cmd.K_W = 0.001; 
 cmd.T = 0.0;
 _ioPort.sendRecv(&cmd,&data);
 ```
